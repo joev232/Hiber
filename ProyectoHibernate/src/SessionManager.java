@@ -4,6 +4,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 public class SessionManager {
+	//es publica y estatica y se llama sin necesidad de instanciar
 	
 	static {
 		
