@@ -20,6 +20,13 @@ public class Countries implements java.io.Serializable {
 	public Countries(String countryId) {
 		this.countryId = countryId;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String cadena;
+		cadena=this.countryName;
+		return cadena;
+	}
 
 	public Countries(String countryId, Regions regions, String countryName,
 			Set locationses) {

@@ -27,6 +27,14 @@ public class Regions implements java.io.Serializable {
 		this.countrieses = countrieses;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String cadena;
+		cadena=this.regionId+" "+this.regionName+" "+ this.countrieses;
+		return cadena;
+	}
+	
 	public BigDecimal getRegionId() {
 		return this.regionId;
 	}

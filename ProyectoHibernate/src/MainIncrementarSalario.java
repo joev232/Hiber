@@ -47,7 +47,7 @@ public class MainIncrementarSalario {
 	    			emp.setSalary(salarioincre);
 	    			//no es necesario jhacer el save merce ni nada		
 	    			
-	    			//System.out.println(salarioincre);
+	    			System.out.println(salarioincre);
 	    			//System.out.println(emp.toString());
 	    		}
 	    		transaction.commit();

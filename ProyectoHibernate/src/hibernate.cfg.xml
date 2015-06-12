@@ -11,6 +11,7 @@
         <property name="hibernate.default_schema">HR</property>
         <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
         
+        <property name="show_sql">true</property>
         <mapping resource="Employees.hbm.xml" />
     	<mapping resource="Departments.hbm.xml" />
     	<mapping resource="Locations.hbm.xml" />
