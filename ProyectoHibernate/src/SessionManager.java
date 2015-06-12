@@ -14,7 +14,7 @@ public class SessionManager {
 	}
 	
 	private static SessionFactory sesion_factory;
-		
+	//solo un session factory y este me generara varias sesiones	
 	private SessionManager (){}
 	
 	public static SessionFactory getSessionFactory ()

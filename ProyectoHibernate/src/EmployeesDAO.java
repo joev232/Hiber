@@ -28,7 +28,7 @@ public class EmployeesDAO extends SuperClaseDAO  implements InterfaceDAO{
 		
 		List<Employees> listar=null;
 		
-		listar=getSession().createSQLQuery("select * from employess").addEntity(Employees.class).list();
+		listar=getSession().createSQLQuery("select * from EMPLOYEES").addEntity(Employees.class).list();
 		
 		return listar;
 		
