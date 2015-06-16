@@ -25,16 +25,15 @@ public class EmployeesDAO extends SuperClaseDAO  implements InterfaceDAO{
 	}
 	
 	public List<Employees> listarempleados(){
-		
 		List<Employees> listar=null;
-		
 		listar=getSession().createSQLQuery("select * from EMPLOYEES").addEntity(Employees.class).list();
-		
 		return listar;
-		
 	}
 	
-//	EmployeesDAO employeesDAO=new EmployeesDAO();
-	
-	
+	public List<Employees> listarempleadoordenadoID(){
+		List<Employees> listarxid=null;
+		listarxid=getSession().createSQLQuery("SELECT * FROM EMPLOYEES order by DEPARTMENT_ID").addEntity(Employees.class).list();
+		return listarxid;
+	}
+	//	EmployeesDAO employeesDAO=new EmployeesDAO();
 }

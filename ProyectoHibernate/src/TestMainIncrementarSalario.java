@@ -9,6 +9,7 @@ public class TestMainIncrementarSalario {
 	public void test() {
 		
 		
+		
 	}
 
 }
