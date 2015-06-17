@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,7 +9,14 @@ import org.hibernate.Transaction;
 public class EmployeeService  {
 	
 	EmployeesDAO employeesDAO=new EmployeesDAO();
-	Departments departments=new Departments();
+	DepartmentsDAO departmentsDAO=new DepartmentsDAO();
+	
+	public EmployeeService() {
+	// TODO Auto-generated constructor stub
+	this.employeesDAO=new EmployeesDAO();
+	this.departmentsDAO=new DepartmentsDAO();
+	
+}
 	
 	public boolean incrementarSalario(){
 		//session.obtenerSesionNueva();
@@ -52,75 +60,84 @@ public class EmployeeService  {
 			emp.setSalary(emp.getSalary().multiply(new BigDecimal(1.20) ));
 		}
 	}
+	
+	
 	//hacer un metodo para mostrar el empleado con mayor salario de cada departamento
-	public void mejorPagadoxDepartamento(List<Employees> listarid){
+		public List<Employees> mejorPagadoxDepartamento(){
 		
-		Session session=null;
-		Transaction transaction=null;
-		boolean listaemp = false;
-		try {
-			session = SessionManager.obtenerSesionNueva();
-			transaction = session.beginTransaction();
-			employeesDAO.setSession(session);
-			
-		
-			int departamentoinicia=0; 
-			
-			for(Employees emp:listarid){
-				
-				
-				//departamento=emp.getDepartments().getDepartmentId();
-				int salario = emp.getSalary().intValue();
-				int salariomayor =0;
-				
-				
-				//salario=salariomayor;
-				if(departamentoinicia==emp.getDepartments().getDepartmentId()){
-					if(salariomayor > salario){
-						departamentoinicia=emp.getDepartments().getDepartmentId();
-						salario=salariomayor;
-						System.out.println(salario);
-					}
-					
-				}
-					
-					
-				}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		//return listaemp;
-		
-	}
-	
-	public List<Employees> recuperarEmpleadoID(int departament_id) 
-	 	{	 
-		Session session=null;
-		Transaction transaction=null;
-		boolean listaemp = false;
-	 	List<Employees> list_employees = null; 
-	 		 
+			Transaction transaction = null;	 
+	 		Session session = null; 
+	 		List<Employees> listamaspagado = new ArrayList<Employees>();
+	 		List<Departments> listadepartamento = new ArrayList<Departments>();  
 	 		try 
-	 		{	 
-	 			session = SessionManager.obtenerSesionNueva();
-				transaction = session.beginTransaction();
-				employeesDAO.setSession(session);
-	 		 					
-	 		} 
-	 		catch(Exception e) 
 	 		{ 
-	 			e.printStackTrace(); 
+	 			session= SessionManager.obtenerSesionNueva();
+	 			employeesDAO.setSession(session);
+	 			transaction=employeesDAO.getSession().beginTransaction();
+	 			listadepartamento=leerDepartamento();
+	 			
+	 			for(Departments departamento:listadepartamento){
+	 				listamaspagado.add(obtenerMasGana(departamento));
+	 			}
 	 		} 
-	 	
-	 		 
-	 		return list_employees; 
+	 		catch (Exception e) 
+			{ 
+	 			e.printStackTrace(); 
+	 			transaction.rollback(); 
+	 		} 
+	 		finally 
+	 		{ 
+	 			SessionManager.cerrarSession(session);
+	 			 
+	 		} 
+	 		 return listamaspagado; 
 	 	} 
+		private Employees obtenerMasGana(Departments dpto){
+			Employees empleadomasgana = null;
+			BigDecimal mayor = new BigDecimal (0);
+			List<Employees> listaremp = new ArrayList<Employees>();
+			listaremp = employeesDAO.listadoPorDepartamento(dpto); 
+			for (Employees emp : listaremp) 
+			{
+				//salario mayor por departamento
+				if (emp.getSalary().intValue() >  mayor.intValue())
+				{
+					mayor = emp.getSalary();
+					empleadomasgana = emp;
+				}
+			}
+			return empleadomasgana;
+			
+		}
+		//recupero la lista de departamentos
+		private List<Departments> leerDepartamento(){
+			List<Departments> departa=departmentsDAO.listarDepartamentos();
+			return departa;
+		}
+		
+		public List<Employees> obtenerEmpleadosPorDepartamento(Object dpto)
+		{
+			List <Employees> listempdepartamento = new ArrayList<Employees>();
+			Transaction transaction = null;	
+			Session session = null;
+			try
+			{
+				session = SessionManager.obtenerSesionNueva();
+				employeesDAO.setSession(session);
+				transaction = employeesDAO.getSession().beginTransaction();
+				listempdepartamento = employeesDAO.listadoPorDepartamento(dpto);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				transaction.rollback();//si algo ha ido mal, deshago la transacción
+			}
+			finally
+			{
+				session.close();
+			}
+			return listempdepartamento;
+		}
+		
+}
 
-	
-	
-	public EmployeeService() {
-	// TODO Auto-generated constructor stub
-	this.employeesDAO=new EmployeesDAO();
-}
-}

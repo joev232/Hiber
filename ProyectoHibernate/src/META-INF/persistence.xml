@@ -11,7 +11,7 @@
  <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
  <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
  <property name="javax.persistence.jdbc.user" value="HR" />
- <property name="javax.persistence.jdbc.password" value="pruebas" />
+ <property name="javax.persistence.jdbc.password" value="PRUEBAS" />
  <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
  
 </properties>

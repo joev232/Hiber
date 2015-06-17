@@ -1,7 +1,7 @@
 import java.util.List;
 
 
-public class EmployeesDAO extends SuperClaseDAO  implements InterfaceDAO{
+public class EmployeesDAO extends SuperClaseDAO  implements InterfaceEmployeeDAO{
 
 	public Object create(Object o) {
 		// TODO Auto-generated method stub
@@ -29,11 +29,12 @@ public class EmployeesDAO extends SuperClaseDAO  implements InterfaceDAO{
 		listar=getSession().createSQLQuery("select * from EMPLOYEES").addEntity(Employees.class).list();
 		return listar;
 	}
-	
-	public List<Employees> listarempleadoordenadoID(){
-		List<Employees> listarxid=null;
-		listarxid=getSession().createSQLQuery("SELECT * FROM EMPLOYEES order by DEPARTMENT_ID").addEntity(Employees.class).list();
-		return listarxid;
+
+	public List<Employees> listadoPorDepartamento(Object dpto) {
+		// TODO Auto-generated method stub
+			
+			List<Employees> lista = getSession().createSQLQuery("SELECT * FROM EMPLOYEES WHERE DEPARTMENT_ID ="+dpto).addEntity(Employees.class).list();
+			//List<Employees> lis=getSession().createSQLQuery(queryString)
+			return lista;
 	}
-	//	EmployeesDAO employeesDAO=new EmployeesDAO();
 }
